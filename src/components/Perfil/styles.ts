@@ -41,19 +41,6 @@ export const ProfileData = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    a {
-      font-size: 0.75rem;
-      line-height: 160%;
-      text-transform: uppercase;
-      text-decoration: none;
-
-      color: ${(props) => props.theme.blue};
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 
   div {

@@ -9,7 +9,7 @@ export function Profile() {
         <h1>
           Cameron Williamson
           <a href="#">
-            github <ArrowSquareOut size={12} weight="bold" />
+            github <ArrowSquareOut />
           </a>
         </h1>
         <p>
@@ -19,12 +19,12 @@ export function Profile() {
         </p>
         <div>
           <span>
-            <GithubLogo />
+            <GithubLogo size={14} weight="bold" />
             phelipescript
           </span>
 
           <span>
-            <Users />
+            <Users size={14} weight="bold" />
             32 seguidores
           </span>
         </div>
