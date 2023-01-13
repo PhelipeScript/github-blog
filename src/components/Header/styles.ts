@@ -3,7 +3,7 @@ import headerBackground from '../../assets/header-background.svg'
 
 export const HeaderContainer = styled.header`
   min-height: 18.5rem;
-  width: 100vw;
+  width: 100%;
 
   background: url(${headerBackground}) no-repeat;
   background-size: cover;
