@@ -8,7 +8,7 @@ export function Router() {
     <Routes>
       <Route path="/github-blog" element={<DefaultLayout />}>
         <Route path="/github-blog" element={<GitHubBlog />} />
-        <Route path="/github-blog/issue" element={<Issue />} />
+        <Route path="/github-blog/issue/:id" element={<Issue />} />
       </Route>
     </Routes>
   )

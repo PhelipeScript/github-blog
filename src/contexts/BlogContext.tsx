@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { searchApi, userApi } from '../lib/axios'
 
 interface UserDataProps {
@@ -9,17 +16,20 @@ interface UserDataProps {
   name: string
 }
 
-interface IssueDataProps {
+export interface IssueDataProps {
+  id: number
   title: string
   body: string
   comments: number
   created_at: string
   html_url: string
+  total_count?: number
 }
 
 interface BlogContextType {
   userData: UserDataProps
-  issueData: IssueDataProps
+  issueData: IssueDataProps[]
+  getIssues: (query?: string) => Promise<void>
 }
 
 export const BlogContext = createContext({} as BlogContextType)
@@ -37,13 +47,21 @@ export function BlogContextProvider({ children }: BlogContextProviderProps) {
     name: '',
   })
 
-  const [issueData, setIssueData] = useState<IssueDataProps>({
-    title: '',
-    body: '',
-    comments: 0,
-    created_at: '',
-    html_url: '',
-  })
+  const issueDataEmpty = useMemo(() => {
+    return [
+      {
+        id: 0,
+        title: '',
+        body: '',
+        comments: 0,
+        created_at: '',
+        html_url: '',
+        total_count: 0,
+      },
+    ]
+  }, [])
+
+  const [issueData, setIssueData] = useState<IssueDataProps[]>(issueDataEmpty)
 
   async function getUserData() {
     const response = await userApi.get('/phelipescript')
@@ -53,27 +71,47 @@ export function BlogContextProvider({ children }: BlogContextProviderProps) {
     setUserData({ avatar_url, bio, followers, login, name })
   }
 
-  async function getIssues() {
-    const query = ''
-    const response = await searchApi.get('/issues', {
-      params: {
-        q: `${query} repo:phelipescript/github-blog`,
-      },
-    })
+  const getIssues = useCallback(
+    async (query?: string) => {
+      const response = await searchApi.get('/issues', {
+        params: {
+          q: `${!query ? '' : query} repo:phelipescript/github-blog`,
+        },
+      })
 
-    const [{ title, body, comments, created_at, html_url }] =
-      response.data.items
+      const { total_count } = response.data
 
-    setIssueData({ title, body, comments, created_at, html_url })
-  }
+      if (total_count !== 0) {
+        const APIDataIssue: IssueDataProps[] = []
+
+        response.data.items.map((item: IssueDataProps) => {
+          const { id, title, body, comments, created_at, html_url } = item
+
+          return APIDataIssue.push({
+            id,
+            title,
+            body,
+            comments,
+            created_at,
+            html_url,
+          })
+        })
+
+        return setIssueData(APIDataIssue)
+      }
+
+      setIssueData(issueDataEmpty)
+    },
+    [issueDataEmpty],
+  )
 
   useEffect(() => {
     getUserData()
     getIssues()
-  }, [])
+  }, [getIssues])
 
   return (
-    <BlogContext.Provider value={{ userData, issueData }}>
+    <BlogContext.Provider value={{ userData, issueData, getIssues }}>
       {children}
     </BlogContext.Provider>
   )

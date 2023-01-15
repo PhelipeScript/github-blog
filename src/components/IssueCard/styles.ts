@@ -17,7 +17,7 @@ export const IssueContent = styled.div`
     transition: border 0.2s;
   }
 
-  div {
+  div:first-child {
     display: grid;
     grid-template-columns: 4fr 1fr;
     gap: 1rem;
@@ -33,8 +33,12 @@ export const IssueContent = styled.div`
     }
   }
 
-  p {
+  div:last-child {
     max-height: 6.6rem;
     overflow: hidden;
+
+    img {
+      max-width: 100%;
+    }
   }
 `

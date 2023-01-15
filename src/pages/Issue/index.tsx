@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { useContext } from 'react'
 import { BlogContext } from '../../contexts/BlogContext'
 
@@ -17,7 +17,14 @@ import {
 } from 'phosphor-react'
 
 export function Issue() {
-  const { issueData, userData } = useContext(BlogContext)
+  const { id } = useParams()
+
+  const { userData, issueData } = useContext(BlogContext)
+
+  const currentIssue = issueData.findIndex((issue) => issue.id === Number(id))
+
+  const { body, comments, created_at, html_url, title } =
+    issueData[currentIssue]
 
   return (
     <IssueContainer>
@@ -28,13 +35,13 @@ export function Issue() {
             voltar
           </NavLink>
 
-          <a href={issueData.html_url} target="_blank" rel="noreferrer">
+          <a href={html_url} target="_blank" rel="noreferrer">
             ver no github
             <ArrowSquareOut size={16} weight="bold" />
           </a>
         </div>
 
-        <h1>{issueData.title}</h1>
+        <h1>{title}</h1>
 
         <div>
           <span>
@@ -42,19 +49,18 @@ export function Issue() {
           </span>
           <span>
             <Calendar size={16} weight="fill" />
-            {formatDistanceToNow(new Date(issueData.created_at), {
+            {formatDistanceToNow(new Date(created_at), {
               addSuffix: true,
               locale: ptBR,
             })}
           </span>
           <span>
-            <ChatCircle size={16} weight="fill" /> {issueData.comments}{' '}
-            comentários
+            <ChatCircle size={16} weight="fill" /> {comments} comentários
           </span>
         </div>
       </IssueHeader>
       <div>
-        <ReactMarkdown>{issueData.body}</ReactMarkdown>
+        <ReactMarkdown>{body}</ReactMarkdown>
       </div>
     </IssueContainer>
   )

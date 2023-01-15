@@ -1,34 +1,39 @@
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { useContext } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { useNavigate } from 'react-router-dom'
 
-import { BlogContext } from '../../contexts/BlogContext'
 import { IssueContent } from './styles'
 
-export function IssueCard() {
-  const { issueData } = useContext(BlogContext)
+interface IssueCardProps {
+  id: number
+  title: string
+  created_at: string
+  body: string
+}
 
+export function IssueCard({ id, title, created_at, body }: IssueCardProps) {
   const navigate = useNavigate()
 
   function handleReadEntireIssue() {
-    navigate('issue')
+    navigate(`issue/${id}`)
   }
 
   return (
     <IssueContent onClick={handleReadEntireIssue}>
       <div>
-        <h2>{issueData.title}</h2>
+        <h2>{title}</h2>
         <span>
-          {issueData.created_at &&
-            formatDistanceToNow(new Date(issueData.created_at), {
+          {created_at &&
+            formatDistanceToNow(new Date(created_at), {
               addSuffix: true,
               locale: ptBR,
             })}
         </span>
       </div>
-
-      <p>{issueData.body}</p>
+      <div>
+        <ReactMarkdown>{body}</ReactMarkdown>
+      </div>
     </IssueContent>
   )
 }

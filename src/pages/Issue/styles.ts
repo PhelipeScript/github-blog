@@ -13,7 +13,7 @@ export const IssueContainer = styled.main`
     padding: 2.5rem 2rem;
 
     img {
-      width: 100%;
+      max-width: 100%;
 
       margin-top: 1rem;
     }
