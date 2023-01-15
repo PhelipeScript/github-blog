@@ -35,6 +35,6 @@ export const IssueContent = styled.div`
 
   p {
     max-height: 6.6rem;
-    overflow-y: hidden;
+    overflow: hidden;
   }
 `

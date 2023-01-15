@@ -1,31 +1,34 @@
 import { ArrowSquareOut, GithubLogo, Users } from 'phosphor-react'
+import { useContext } from 'react'
+import { BlogContext } from '../../contexts/BlogContext'
+
 import { ProfileContainer, ProfileData } from './styles'
 
 export function Profile() {
+  const { userData } = useContext(BlogContext)
+  
   return (
     <ProfileContainer>
-      <img src="https://avatars.githubusercontent.com/u/106886725?v=4" alt="" />
+      <img src={userData.avatar_url} alt="" />
       <ProfileData>
         <h1>
-          Cameron Williamson
-          <a href="#">
+          {userData.name}
+          <a href={`https://github.com/${userData.login}`} target="_blank">
             github <ArrowSquareOut />
           </a>
         </h1>
         <p>
-          Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-          viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat
-          pulvinar vel mass.
+          {userData.bio}
         </p>
         <div>
           <span>
             <GithubLogo size={14} weight="bold" />
-            phelipescript
+            {userData.login}
           </span>
 
           <span>
             <Users size={14} weight="bold" />
-            32 seguidores
+            {userData.followers} seguidores
           </span>
         </div>
       </ProfileData>

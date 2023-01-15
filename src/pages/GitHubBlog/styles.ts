@@ -24,12 +24,6 @@ export const Publications = styled.div`
     font-size: 1.125rem;
 
     margin-bottom: 0.75rem;
-
-    span {
-      color: ${(props) => props.theme['base-span']};
-      font-size: 0.875rem;
-      font-weight: 400;
-    }
   }
 `
 

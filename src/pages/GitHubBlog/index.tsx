@@ -1,5 +1,6 @@
 import { IssueCard } from '../../components/IssueCard'
 import { Profile } from '../../components/Perfil'
+
 import {
   BlogContainer,
   FormContainer,
@@ -13,10 +14,7 @@ export function GitHubBlog() {
       <Profile />
 
       <Publications>
-        <h2>
-          Publicações
-          <span>6 publicações</span>
-        </h2>
+        <h2>Publicações</h2>
 
         <FormContainer action="">
           <input type="text" placeholder="Buscar conteúdo" />
@@ -24,11 +22,6 @@ export function GitHubBlog() {
         </FormContainer>
 
         <IssuesContainer>
-          <IssueCard />
-          <IssueCard />
-          <IssueCard />
-          <IssueCard />
-          <IssueCard />
           <IssueCard />
         </IssuesContainer>
       </Publications>

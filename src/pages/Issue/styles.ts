@@ -9,6 +9,16 @@ export const IssueContainer = styled.main`
   margin: 0 auto;
   padding-bottom: 2.5rem;
 
+  & > div {
+    padding: 2.5rem 2rem;
+
+    img {
+      width: 100%;
+
+      margin-top: 1rem;
+    }
+  }
+
   @media (max-width: 768px) {
     padding-inline: 1rem;
   }
@@ -50,6 +60,7 @@ export const IssueHeader = styled.header`
     margin-top: 8px;
 
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 2rem;
 
@@ -58,6 +69,7 @@ export const IssueHeader = styled.header`
       align-items: center;
       gap: 8px;
 
+      white-space: nowrap;
       color: ${(props) => props.theme['base-span']};
     }
   }
